@@ -1,0 +1,49 @@
+/* ====== Hero ====== */
+.hero {
+  padding: 8rem 5%;  /*left and right padding are in percentage for better screen space optimization*/
+  text-align: center;
+  background: whitesmoke; /*this will change to a vanta js background*/
+}
+
+.hero-content h1 {
+  text-align: center;
+  font-size: 3.5rem;
+  color: #279af1;
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  color: #000;
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;  
+}
+
+.button-one {
+  background: #279af1;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button-two {
+  background: white;
+  color: #279af1;
+  border: 1px solid #279af1;
+  padding: 0.8rem 1.8rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
