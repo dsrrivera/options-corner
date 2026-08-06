@@ -1,4 +1,5 @@
 import './HomePage.css'
+import { Link } from "react-router";
 
 export default function HomePage() {
   return(
@@ -6,11 +7,10 @@ export default function HomePage() {
       <div className="hero-content">
         <h1>Calculate and Analyze Options In a Flash</h1>
         
-        <p>Quickly compute and visualize European call/put options and view a dynamically updating implied volatility surface.</p>
+        <p>Quickly compute and visualize European call/put options prices and view dynamically updating options Greeks.</p>
         
         <div className="hero-buttons">
-          <button className="button-one">Get Started</button>
-          <button className="button-two">GitHub</button>
+          <Link to="/options" className="button-one"> Get Started </Link>
         </div>
       </div>
     </section>

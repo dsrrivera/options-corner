@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { FaGithubAlt } from "react-icons/fa";
 import './Header.css'
 
 export default function Header() {
@@ -6,11 +7,22 @@ export default function Header() {
     <header>
       <nav className="navbar">
           <div className="nav-logo">OneLab</div>
+
           <ul className="nav-links">
-            <li><Link to="/pricer">Pricing Visualizer</Link></li>
+            <li><Link to="/options">Options</Link></li>
             <li><Link to="/contact">Contact</Link></li>
           </ul>
-          <button className="nav-button">GitHub</button>
+
+          <a
+            href="https://github.com/dsrrivera/one-lab"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-github-button"
+          >
+            <FaGithubAlt size={30} />
+            <span>GitHub</span>
+          </a>
+
         </nav>
     </header>
   )
