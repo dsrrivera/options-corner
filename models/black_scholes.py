@@ -23,7 +23,7 @@ class BlackScholes:
     def computeD1(self, volatility=None):
         volatility = self.volatility if volatility is None else volatility
 
-        numerator = math.log(self.strike_price/self.stock_price) + (self.interest_rate + (volatility**2)/2) * self.time_til_expiration
+        numerator = math.log(self.stock_price/self.strike_price) + (self.interest_rate + (volatility**2)/2) * self.time_til_expiration
         denominator = volatility*(math.sqrt(self.time_til_expiration))
         d1 = numerator/denominator
         return d1
