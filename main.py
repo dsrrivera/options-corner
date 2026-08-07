@@ -22,13 +22,14 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
     allow_headers=["*"],
+    allow_methods=["*"]
 )
 
 @app.post("/api/pricer")
 def get_option_price(input: BlackScholesInput):
     result = BlackScholes(input.stock_price, input.strike_price, input.time_til_expiration, input.option_type, input.interest_rate, input.volatility)
 
-    return {"result": result.option_price}
+    return {"option_price": result.option_price}
 
 start_time = time.perf_counter_ns()
 
