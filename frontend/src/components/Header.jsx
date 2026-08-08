@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header>
       <nav className="navbar">
-          <div className="nav-logo">OneLab</div>
+          <div className="nav-logo">OptionsCorner</div>
 
           <ul className="nav-links">
             <li><Link to="/options">Options</Link></li>
