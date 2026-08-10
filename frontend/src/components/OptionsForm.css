@@ -1,0 +1,43 @@
+.options-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  background-color: #CBD5E2;
+
+  width: 100%;
+  border-radius: 8px;
+}
+
+.result{
+  display: flex;
+  justify-content: center;
+
+  margin-top: 25px;
+  padding: 0.8rem 1.2rem;
+  background-color: #279af1;
+  border-radius: 4px;
+  font-size: 1.15rem;
+  color: white;
+}
+
+.options-form input {
+  padding: 0.8rem 1.2rem;
+  border-radius: 6px;
+  border: 1px solid #279af1;
+  font-size: 16px;
+  color: #0f172a;
+  background: #f8fafc;
+  margin: 5px;
+}
+
+.price-submit-btn {
+  background-color: #279af1;
+  border: 1px solid #2563eb;
+  margin: 5px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  color: white;
+
+  font-weight: 700;
+  font-size: 1.15rem;
+}

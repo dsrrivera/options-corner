@@ -49,22 +49,22 @@ function OptionsForm() {
   };
 
   return (
-    <section className='OptionsForm'>
+    <section className='options-form-result'>
       {/* handles the user input and modifies form state */}
-      <form onSubmit={handleSubmit}>
+      <form className='options-form' onSubmit={handleSubmit}>
+        <input name="option_type" value={form.option_type} onChange={handleChange} placeholder="Option Type" />
         <input name="stock_price" value={form.stock_price} onChange={handleChange} placeholder="Stock/Index Price" />
         <input name="strike_price" value={form.strike_price} onChange={handleChange} placeholder="Strike Price" />
-        <input name="time_til_expiration" value={form.time_til_expiration} onChange={handleChange} placeholder="In Years" />
+        <input name="time_til_expiration" value={form.time_til_expiration} onChange={handleChange} placeholder="DTE (In Days)" />
         <input name="interest_rate" value={form.interest_rate} onChange={handleChange} placeholder="Interest Rate" />
-        <input name="option_type" value={form.option_type} onChange={handleChange} placeholder="Option Type" />
         <input name="volatility" value={form.volatility} onChange={handleChange} placeholder="Volatility" />
 
-        <button type="submit">Calculate Price </button>
+        <button className='price-submit-btn' type="submit">Calculate Theoretical Price </button>
       </form>
 
       {/* if result is not null we display the price */}
       {result && (
-        <div>
+        <div className='result'>
           <p>Price: {result.option_price}</p>
         </div>
       )}
