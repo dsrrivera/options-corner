@@ -19,16 +19,17 @@ class BlackScholes:
         else:
             self.option_price = 0.0
 
-    # d1 and d2 can be computed using object instance variables or with user set volatility as needed in newton_raphson
-    def computeD1(self, volatility=None):
+    # d1 and d2 can be computed using object instance variables or with passed volatility or strike_price as needed in newton_raphson and Greeks
+    def computeD1(self, volatility=None, stock_price=None):
         volatility = self.volatility if volatility is None else volatility
+        stock_price = self.stock_price if stock_price is None else stock_price
 
-        numerator = math.log(self.stock_price/self.strike_price) + (self.interest_rate + (volatility**2)/2) * self.time_til_expiration
+        numerator = math.log(stock_price/self.strike_price) + (self.interest_rate + (volatility**2)/2) * self.time_til_expiration
         denominator = volatility*(math.sqrt(self.time_til_expiration))
         d1 = numerator/denominator
         return d1
 
-    # d1 may change in newton_raphson so d1 may be set manually to correctly compute d2
+    # d1 may change in newton_raphson or for Greeks charts so d1 may be set manually to correctly compute d2
     def computeD2(self, volatility=None, d1=None):
         volatility = self.volatility if volatility is None else volatility
         d1 = self.d1 if d1 is None else d1
@@ -54,3 +55,49 @@ class BlackScholes:
         d2_norm = norm.cdf(-d2)
         theoretical_price = ((math.e**(-self.interest_rate * self.time_til_expiration)) * self.strike_price * d2_norm) - (self.stock_price * d1_norm)
         return theoretical_price
+
+    def computeDelta(self):
+        if self.option_type == 'call':
+            delta = norm.cdf(self.d1)
+            return delta
+        
+        elif self.option_type == 'put':
+            norm.cdf(self.d1) - 1
+            return delta
+
+        return 0
+
+    def computeTheta(self):
+        if self.option_type == 'call':
+            first_term = -(self.stock_price * norm.cdf(self.d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration))
+            second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(self.d2)
+            theta = first_term - second_term
+            return theta
+        
+        elif self.option_type == 'put':
+            first_term = -(self.stock_price * norm.cdf(self.d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration)) 
+            second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(-self.d2)
+            return theta
+
+        return 0
+
+    def computeRho(self):
+        if self.option_type == 'call':
+            rho = self.strike_price * self.time_til_expiration * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(self.d2)
+            return rho
+        
+        elif self.option_type == 'put':
+            rho = -self.strike_price * self.time_til_expiration * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(-self.d2)
+            return rho
+
+        return 0
+
+    def computeGamma(self):
+        gamma = norm.pdf(self.d1) / (self.stock_price * self.volatility * math.sqrt(self.time_til_expiration))
+
+        return gamma
+
+    def computeVega(self):
+        vega = self.stock_price * norm.pdf(self.d1) * math.sqrt(self.time_til_expiration)
+
+        return vega
