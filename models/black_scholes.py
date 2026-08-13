@@ -5,7 +5,7 @@ class BlackScholes:
     def __init__(self, stock_price, strike_price,  time_til_expiration, option_type, interest_rate=0.04, volatility = .20):
         self.stock_price = stock_price
         self.strike_price = strike_price
-        self.time_til_expiration = time_til_expiration  #in years
+        self.time_til_expiration = time_til_expiration/365  #in years
         self.interest_rate = interest_rate
         self.option_type = option_type
         self.volatility = volatility
@@ -62,21 +62,22 @@ class BlackScholes:
             return delta
         
         elif self.option_type == 'put':
-            norm.cdf(self.d1) - 1
+            delta = norm.cdf(self.d1) - 1
             return delta
 
         return 0
 
     def computeTheta(self):
         if self.option_type == 'call':
-            first_term = -(self.stock_price * norm.cdf(self.d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration))
+            first_term = -((self.stock_price * norm.pdf(self.d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration)))
             second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(self.d2)
             theta = first_term - second_term
             return theta
         
         elif self.option_type == 'put':
-            first_term = -(self.stock_price * norm.cdf(self.d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration)) 
+            first_term = -((self.stock_price * norm.pdf(self.d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration)))
             second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(-self.d2)
+            theta = first_term + second_term
             return theta
 
         return 0
