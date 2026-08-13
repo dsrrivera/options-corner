@@ -1,12 +1,12 @@
 /* ====== Navbar ====== */
 .navbar {
   display: grid;
-  /* creates 3 columns, each taking up 1 equal fraction of space */
+  /* we make 3 columns, each taking up 1 equal fraction of space to center everything correctly*/
   grid-template-columns: 1fr 1fr 1fr; 
   align-items: center;
    
   padding: 1.25rem 5%;
-  background: #ffffff;
+  background: #f2f4f8;
   border-bottom: 1px solid #2563eb;
 }
 
