@@ -1,26 +1,9 @@
 import { useState } from 'react';
 import './OptionsForm.css'
 
-function OptionsForm() {
-  // form holds the values from the user needed for black_scholes.py
-  const [form, setForm] = useState({
-    stock_price: "",
-    strike_price: "",
-    time_til_expiration: "",
-    interest_rate: "",
-    option_type: "",
-    volatility: ""
-  });
-  
+function OptionsForm({ form, handleChange}) {  
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
-
-  //used to update form state every time user inputs a value
-  const handleChange = (e) => {
-    setForm({ 
-      ...form,  //carry over everything already in the form
-      [e.target.name]: e.target.value });
-  };
 
   //sends POST request to api/pricer to compute options_price in black_scholes.py from api in main.py
   const handleSubmit = async (e) => {
