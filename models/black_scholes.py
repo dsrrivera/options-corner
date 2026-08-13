@@ -56,49 +56,68 @@ class BlackScholes:
         theoretical_price = ((math.e**(-self.interest_rate * self.time_til_expiration)) * self.strike_price * d2_norm) - (self.stock_price * d1_norm)
         return theoretical_price
 
-    def computeDelta(self):
+
+    # delta, along with other Greeks, can have certain parameters set manually for analysis
+    # currently, d1, d2, and the underlying stock_price can change to observe how they move relative to the underlying stock_price
+    # the idea is that the methods will use the parameters passed to compute a new value with updated variables
+    # otherwise, the methods compute the values with values currently stored in the BlackScholes instance variables
+    def computeDelta(self, d1=None):
+        d1 = self.d1 if d1 is None else d1
+
         if self.option_type == 'call':
-            delta = norm.cdf(self.d1)
+            delta = norm.cdf(d1)
             return delta
         
         elif self.option_type == 'put':
-            delta = norm.cdf(self.d1) - 1
+            delta = norm.cdf(d1) - 1
             return delta
 
         return 0
 
-    def computeTheta(self):
+    def computeTheta(self, stock_price=None, d1=None, d2=None):
+        d1 = self.d1 if d1 is None else d1
+        d2 = self.d2 if d2 is None else d2
+        stock_price = self.stock_price if stock_price is None else stock_price
+
         if self.option_type == 'call':
-            first_term = -((self.stock_price * norm.pdf(self.d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration)))
-            second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(self.d2)
+            first_term = -((stock_price * norm.pdf(d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration)))
+            second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(d2)
             theta = first_term - second_term
             return theta
         
         elif self.option_type == 'put':
-            first_term = -((self.stock_price * norm.pdf(self.d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration)))
-            second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(-self.d2)
+            first_term = -((stock_price * norm.pdf(d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration)))
+            second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(-d2)
             theta = first_term + second_term
             return theta
 
         return 0
 
-    def computeRho(self):
+    def computeRho(self, d2=None):
+        d2 = self.d2 if d2 is None else d2
+
         if self.option_type == 'call':
-            rho = self.strike_price * self.time_til_expiration * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(self.d2)
+            rho = self.strike_price * self.time_til_expiration * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(d2)
             return rho
         
         elif self.option_type == 'put':
-            rho = -self.strike_price * self.time_til_expiration * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(-self.d2)
+            rho = -self.strike_price * self.time_til_expiration * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(-d2)
             return rho
 
         return 0
 
-    def computeGamma(self):
-        gamma = norm.pdf(self.d1) / (self.stock_price * self.volatility * math.sqrt(self.time_til_expiration))
+    def computeGamma(self, stock_price=None, d1=None):
+        stock_price = self.stock_price if stock_price is None else stock_price
+        d1 = self.d1 if d1 is None else d1
+
+        gamma = norm.pdf(d1) / (stock_price * self.volatility * math.sqrt(self.time_til_expiration))
 
         return gamma
 
-    def computeVega(self):
-        vega = self.stock_price * norm.pdf(self.d1) * math.sqrt(self.time_til_expiration)
+    def computeVega(self, stock_price=None, d1=None):
+        stock_price = self.stock_price if stock_price is None else stock_price
+        d1 = self.d1 if d1 is None else d1
+
+        vega = stock_price * norm.pdf(d1) * math.sqrt(self.time_til_expiration)
 
         return vega
