@@ -1,8 +1,6 @@
-import os
-import time
-import numpy as np
 from models.black_scholes import BlackScholes
 from solvers.newton_raphson import NewtonRaphson
+from services.greeks_plots import generateDeltaPlot, generateGammaPlot, generateThetaPlot, generateVegaPlot, generateRhoPlot
 
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -27,19 +25,18 @@ app.add_middleware(
 
 @app.post("/api/pricer")
 def get_option_price(input: BlackScholesInput):
-    result = BlackScholes(input.stock_price, input.strike_price, input.time_til_expiration, input.option_type, input.interest_rate, input.volatility)
+    b1 = BlackScholes(input.stock_price, input.strike_price, input.time_til_expiration, input.option_type, input.interest_rate, input.volatility)
 
-    return {"option_price": result.option_price}
+    return {"option_price": b1.option_price}
 
-start_time = time.perf_counter_ns()
+@app.post("/api/greeks-plots")
+def get_greeks_plots(input: BlackScholesInput):
+    b2 = BlackScholes(input.stock_price, input.strike_price, input.time_til_expiration, input.option_type, input.interest_rate, input.volatility)
 
-b1 = BlackScholes(stock_price=336.91, strike_price=337.50,  time_til_expiration=25/365, option_type='call', interest_rate=0.0414, volatility = .2984)
-print(b1.option_price)
+    delta_plot = generateDeltaPlot(b2)
+    gamma_plot = generateGammaPlot(b2)
+    theta_plot = generateThetaPlot(b2)
+    vega_plot = generateVegaPlot(b2)
+    rho_plot = generateRhoPlot(b2)
 
-b2 = BlackScholes(stock_price=336.91, strike_price=337.50,  time_til_expiration=25/365, option_type='put', interest_rate=0.0414, volatility = .3025)
-print(b2.option_price)
-
-end_time = time.perf_counter_ns()
-print(end_time/1e-9)
-
-print(NewtonRaphson(b1).computeIV(10.75,1000,0.00000001))
+    return {"delta_plot": delta_plot, "gamma_plot": gamma_plot, "theta_plot": theta_plot, "vega_plot": vega_plot, "rho_plot": rho_plot}
