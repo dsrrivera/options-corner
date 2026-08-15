@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './OptionsForm.css'
 
-function OptionsForm({ form, handleChange}) {  
+function OptionsForm({ form, handleChange, setSubmittedForm }) {  
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
@@ -10,22 +10,18 @@ function OptionsForm({ form, handleChange}) {
     e.preventDefault();
     setError(null);
     try {
-      const res = await fetch("http://localhost:8000/api/pricer", {
+      const optionsPrice = await fetch("http://localhost:8000/api/pricer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          stock_price: form.stock_price,
-          strike_price: form.strike_price,
-          time_til_expiration: form.time_til_expiration,
-          interest_rate: form.interest_rate,
-          option_type: form.option_type,
-          volatility: form.volatility,
-        }),
+        body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-      const data = await res.json(); //currently receives just option_price: price
+      if (!optionsPrice.ok) throw new Error(`Request failed: ${optionsPrice.status}`);
+      const data = await optionsPrice.json(); //currently receives just option_price: price
       setResult(data); //remains null if error is caught
-      
+
+      // we update the submittedForm state only after the POST requests is OK
+      setSubmittedForm(form)
+
     } catch (err) {
       setError(err.message);
     }

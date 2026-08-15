@@ -2,12 +2,13 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
-  background-color: #CBD5E2;
+  background-color: #C5E4FB;
 
   width: 100%;
   border-radius: 8px;
 }
 
+/* this is the color of the displayed price */
 .result{
   display: flex;
   justify-content: center;

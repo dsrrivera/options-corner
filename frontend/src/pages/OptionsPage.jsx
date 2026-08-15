@@ -1,6 +1,7 @@
 import './OptionsPage.css'
 import { useState } from 'react';
 import OptionsForm from '../components/OptionsForm'
+import GreeksPlots from '../components/GreeksPlots'
 
 export default function OptionsPage(){
   // form holds the values from the user needed for black_scholes.py
@@ -20,21 +21,18 @@ export default function OptionsPage(){
       [e.target.name]: e.target.value });
   };
 
+  const [submittedForm, setSubmittedForm] = useState(null);
+
   return(
     <main className='options-page'>
 
       <section className='sidebar'>
         {/* we lift the state up from OptionsForm since GreeksPlots require the user inputted information*/}
-        <OptionsForm form = {form} handleChange={handleChange}/>
+        <OptionsForm form = {form} handleChange={handleChange} setSubmittedForm={setSubmittedForm}/>
       </section>
 
       <section className='greeks-charts'>
-        <div className='test-box'></div>
-        <div className='test-box'></div>
-        <div className='test-box'></div>
-        <div className='test-box'></div>
-        <div className='test-box'></div>
-        <div className='test-box'></div>
+        <GreeksPlots submittedForm={submittedForm}/>
       </section>
     </main>
   )
