@@ -53,7 +53,7 @@ def generateDeltaPlot(black_scholes: BlackScholes):
         line_color="red"
     )
 
-    fig.show()
+    # fig.show()
     return pio.to_json(fig)
 
 def generateGammaPlot(black_scholes: BlackScholes):
@@ -104,7 +104,7 @@ def generateGammaPlot(black_scholes: BlackScholes):
         line_color="red"
     )
 
-    fig.show()
+    # fig.show()
     return pio.to_json(fig)
 
 def generateThetaPlot(black_scholes: BlackScholes):
@@ -160,7 +160,7 @@ def generateThetaPlot(black_scholes: BlackScholes):
         line_color="red"
     )
 
-    fig.show()
+    # fig.show()
     return pio.to_json(fig)
 
 def generateVegaPlot(black_scholes: BlackScholes):
@@ -211,7 +211,7 @@ def generateVegaPlot(black_scholes: BlackScholes):
         line_color="red"
     )
 
-    fig.show()
+    # fig.show()
     return pio.to_json(fig)
 
 def generateRhoPlot(black_scholes: BlackScholes):
@@ -267,5 +267,5 @@ def generateRhoPlot(black_scholes: BlackScholes):
         line_color="red"
     )
 
-    fig.show()
+    # fig.show()
     return pio.to_json(fig)
