@@ -67,6 +67,8 @@ def generateGammaPlot(black_scholes: BlackScholes):
 
     fig = px.line(x=list(underlying_prices), y=gamma_values, title="Gamma vs Underlying Stock Price")
 
+    fig.update_traces(line_color="#2f9d50")
+
     fig.update_layout(
         xaxis_title="Stock Price",
         yaxis_title="Gamma",
@@ -123,6 +125,8 @@ def generateThetaPlot(black_scholes: BlackScholes):
 
     fig = px.line(x=list(underlying_prices), y=theta_values, title="Theta vs Underlying Stock Price")
 
+    fig.update_traces(line_color="#dd1c1a")
+
     fig.update_layout(
         xaxis_title="Stock Price",
         yaxis_title="Theta",
@@ -173,6 +177,8 @@ def generateVegaPlot(black_scholes: BlackScholes):
     vega_values = [black_scholes.computeVega(stock_price=price, d1=black_scholes.computeD1(stock_price=price)) for price in underlying_prices]
 
     fig = px.line(x=list(underlying_prices), y=vega_values, title="Vega vs Underlying Stock Price")
+
+    fig.update_traces(line_color="#eca009")
 
     fig.update_layout(
         xaxis_title="Stock Price",
@@ -229,6 +235,8 @@ def generateRhoPlot(black_scholes: BlackScholes):
         rho_values.append(cur_rho)
 
     fig = px.line(x=list(underlying_prices), y=rho_values, title="Rho vs Underlying Stock Price")
+
+    fig.update_traces(line_color="#47304b")
 
     fig.update_layout(
         xaxis_title="Stock Price",
