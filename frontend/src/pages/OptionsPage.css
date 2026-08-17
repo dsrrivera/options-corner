@@ -5,26 +5,14 @@
   }
 
 .sidebar {
-  width: 20%;
+  width: 15%;
   background: #f2f4f8;
-  border-right: 1px solid #f60000;
+  border-right: 1px solid #2563eb;
   padding: 24px 20px;
 }
 
 .greeks-charts {
+  display: flex;
   flex: 1;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 16px;
-  padding: 24px;
-  background: white;
-}
-
-.test-box {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  border: 2px solid #333;
   background-color: #f0f0f0;
 }

@@ -1,44 +1,108 @@
 .options-form {
   display: flex;
   flex-direction: column;
+  gap: 16px;
   justify-content: start;
-  background-color: #C5E4FB;
+
+  background: linear-gradient(135deg, #eaf5ff 0%, #c3e4ff 100%);
+  padding: 1.5rem;
+  border-radius: 14px;
+  border: 1px solid #d3e9fc;
+
+  /* a smaller shadow and a larger more ambient shadow */
+  box-shadow:
+    0 1px 2px #0f172a0a,
+    0 8px 24px #279af114;
 
   width: 100%;
-  border-radius: 8px;
 }
 
-/* this is the color of the displayed price */
-.result{
-  display: flex;
-  justify-content: center;
+.form-label {
+  display: block;
+  margin-bottom: 0px;
 
-  margin-top: 25px;
-  padding: 0.8rem 1.2rem;
-  background-color: #279af1;
-  border-radius: 4px;
-  font-size: 1.15rem;
-  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2563eb;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.form-label-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .options-form input {
-  padding: 0.8rem 1.2rem;
-  border-radius: 6px;
-  border: 1px solid #279af1;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #cfe4f7;
   font-size: 16px;
   color: #0f172a;
-  background: #f8fafc;
-  margin: 5px;
+  background: #ffffff;
+
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.options-form input::placeholder {
+  color: #94a3b8;
+}
+
+.options-form input:hover {
+  border-color: #9cc9f0;
+}
+
+.options-form input:focus {
+  outline: none;
+  border-color: #279af1;
+  box-shadow: 0 0 0 3px #279af159;
 }
 
 .price-submit-btn {
-  background-color: #279af1;
-  border: 1px solid #2563eb;
-  margin: 5px;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
+  align-self: flex-start;
+
+  background: linear-gradient(135deg, #279af1, #1d7fd1);
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
   color: white;
 
-  font-weight: 700;
-  font-size: 1.15rem;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+
+  box-shadow: 0 2px 6px #279af159;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  cursor: pointer;
+}
+
+.price-submit-btn:hover {
+  background: linear-gradient(135deg, #2ea3ff, #279af1);
+  box-shadow: 0 4px 12px #279af159;
+  transform: translateY(-1px);
+}
+
+.price-submit-btn:active {
+  transform: translateY(0); /* reset the button back down when being clicked */
+  box-shadow: 0 2px 4px #279af159;
+}
+
+/* this is the color of the displayed price */
+.result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 20px;
+  padding: 1rem 1.25rem;
+
+  background: #279af1;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px #279af159;
+
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: white;
 }
