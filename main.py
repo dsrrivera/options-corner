@@ -27,7 +27,7 @@ app.add_middleware(
 def get_option_price(input: BlackScholesInput):
     b1 = BlackScholes(input.stock_price, input.strike_price, input.time_til_expiration, input.option_type, input.interest_rate, input.volatility)
 
-    return {"option_price": b1.option_price}
+    return {"option_price": round(b1.option_price,2)}
 
 @app.post("/api/greeks-plots")
 def get_greeks_plots(input: BlackScholesInput):
