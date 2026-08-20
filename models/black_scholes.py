@@ -20,21 +20,23 @@ class BlackScholes:
             self.option_price = 0.0
 
     # d1 and d2 can be computed using object instance variables or with passed volatility or strike_price as needed in newton_raphson and Greeks
-    def computeD1(self, volatility=None, stock_price=None):
+    def computeD1(self, volatility=None, stock_price=None, time_til_expiration=None):
         volatility = self.volatility if volatility is None else volatility
         stock_price = self.stock_price if stock_price is None else stock_price
+        time_til_expiration = self.time_til_expiration if time_til_expiration is None else time_til_expiration
 
-        numerator = math.log(stock_price/self.strike_price) + (self.interest_rate + (volatility**2)/2) * self.time_til_expiration
-        denominator = volatility*(math.sqrt(self.time_til_expiration))
+        numerator = math.log(stock_price/self.strike_price) + (self.interest_rate + (volatility**2)/2) * time_til_expiration
+        denominator = volatility*(math.sqrt(time_til_expiration))
         d1 = numerator/denominator
         return d1
 
     # d1 may change in newton_raphson or for Greeks charts so d1 may be set manually to correctly compute d2
-    def computeD2(self, volatility=None, d1=None):
-        volatility = self.volatility if volatility is None else volatility
+    def computeD2(self, volatility=None, d1=None, time_til_expiration=None):
         d1 = self.d1 if d1 is None else d1
+        volatility = self.volatility if volatility is None else volatility
+        time_til_expiration = self.time_til_expiration if time_til_expiration is None else time_til_expiration
 
-        d2 = d1 - (volatility * math.sqrt(self.time_til_expiration))
+        d2 = d1 - (volatility * math.sqrt(time_til_expiration))
         return d2
 
     # call/put option prices can be computed using object instance variables or with updated d1 and d2 values needed in newton_raphson
@@ -74,20 +76,21 @@ class BlackScholes:
 
         return 0
 
-    def computeTheta(self, stock_price=None, d1=None, d2=None):
+    def computeTheta(self, time_til_expiration=None, stock_price=None, d1=None, d2=None):
         d1 = self.d1 if d1 is None else d1
         d2 = self.d2 if d2 is None else d2
         stock_price = self.stock_price if stock_price is None else stock_price
+        time_til_expiration = self.time_til_expiration if time_til_expiration is None else time_til_expiration
 
         if self.option_type == 'call':
-            first_term = -((stock_price * norm.pdf(d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration)))
-            second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(d2)
+            first_term = -((stock_price * norm.pdf(d1) * self.volatility) / (2 * math.sqrt(time_til_expiration)))
+            second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * time_til_expiration) * norm.cdf(d2)
             theta = first_term - second_term
             return theta
         
         elif self.option_type == 'put':
-            first_term = -((stock_price * norm.pdf(d1) * self.volatility) / (2 * math.sqrt(self.time_til_expiration)))
-            second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * self.time_til_expiration) * norm.cdf(-d2)
+            first_term = -((stock_price * norm.pdf(d1) * self.volatility) / (2 * math.sqrt(time_til_expiration)))
+            second_term = self.interest_rate * self.strike_price * math.e**(-self.interest_rate * time_til_expiration) * norm.cdf(-d2)
             theta = first_term + second_term
             return theta
 
