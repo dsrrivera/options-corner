@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { useState } from 'react';
 import './OptionsForm.css'
 
@@ -10,7 +11,7 @@ function OptionsForm({ form, handleChange, setSubmittedForm }) {
     e.preventDefault();
     setError(null);
     try {
-      const optionsPrice = await fetch("http://localhost:8000/api/pricer", {
+      const optionsPrice = await fetch(`${API_URL}/api/pricer`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

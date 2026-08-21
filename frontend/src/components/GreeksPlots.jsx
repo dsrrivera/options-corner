@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 
@@ -16,7 +17,7 @@ export default function GreeksPlot({ submittedForm }) {
     if (!submittedForm) return; 
     const fetchGreeksPlots = async () => {
       try{
-        const plotsResponse = await fetch('http://localhost:8000/api/greeks-plots', {
+        const plotsResponse = await fetch(`${API_URL}/api/greeks-plots`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(submittedForm)
