@@ -2,6 +2,7 @@ import math
 import numpy as np
 import plotly.io as pio
 import plotly.express as px
+import plotly.graph_objects as go
 
 from models.black_scholes import BlackScholes
 
@@ -15,6 +16,8 @@ def generateDeltaPlot(black_scholes: BlackScholes):
     delta_values = [black_scholes.computeDelta(black_scholes.computeD1(stock_price=price)) for price in underlying_prices]
 
     fig = px.line(x=list(underlying_prices), y=delta_values, title="Delta vs Underlying Stock Price")
+
+    fig.update_traces(line=dict(width=5))
 
     fig.update_layout(
         xaxis_title="Stock Price",
@@ -67,7 +70,7 @@ def generateGammaPlot(black_scholes: BlackScholes):
 
     fig = px.line(x=list(underlying_prices), y=gamma_values, title="Gamma vs Underlying Stock Price")
 
-    fig.update_traces(line_color="#2f9d50")
+    fig.update_traces(line_color="#2f9d50", line=dict(width=5))
 
     fig.update_layout(
         xaxis_title="Stock Price",
@@ -119,13 +122,13 @@ def generateThetaPlot(black_scholes: BlackScholes):
     theta_values = []
     for price in underlying_prices:
         d1=black_scholes.computeD1(stock_price=price)
-        d2=black_scholes.computeD2(d1)
+        d2=black_scholes.computeD2(d1=d1)
         cur_theta = black_scholes.computeTheta(stock_price = price, d1=d1, d2=d2)
         theta_values.append(cur_theta)
 
     fig = px.line(x=list(underlying_prices), y=theta_values, title="Theta vs Underlying Stock Price")
 
-    fig.update_traces(line_color="#dd1c1a")
+    fig.update_traces(line_color="#dd1c1a", line=dict(width=5))
 
     fig.update_layout(
         xaxis_title="Stock Price",
@@ -178,7 +181,7 @@ def generateVegaPlot(black_scholes: BlackScholes):
 
     fig = px.line(x=list(underlying_prices), y=vega_values, title="Vega vs Underlying Stock Price")
 
-    fig.update_traces(line_color="#eca009")
+    fig.update_traces(line_color="#eca009", line=dict(width=5))
 
     fig.update_layout(
         xaxis_title="Stock Price",
@@ -230,13 +233,13 @@ def generateRhoPlot(black_scholes: BlackScholes):
     rho_values = []
     for price in underlying_prices:
         d1=black_scholes.computeD1(stock_price=price)
-        d2=black_scholes.computeD2(d1)
+        d2=black_scholes.computeD2(d1=d1)
         cur_rho = black_scholes.computeRho(d2=d2)
         rho_values.append(cur_rho)
 
     fig = px.line(x=list(underlying_prices), y=rho_values, title="Rho vs Underlying Stock Price")
 
-    fig.update_traces(line_color="#47304b")
+    fig.update_traces(line_color="#47304b", line=dict(width=5))
 
     fig.update_layout(
         xaxis_title="Stock Price",
