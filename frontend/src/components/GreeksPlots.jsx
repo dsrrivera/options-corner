@@ -9,6 +9,7 @@ export default function GreeksPlot({ submittedForm }) {
   const [thetaPlotData, setThetaPlotData] = useState(null)
   const [vegaPlotData, setVegaPlotData] = useState(null)
   const [rhoPlotData, setRhoPlotData] = useState(null)
+  const [thetaSurfacePlotData, setThetaSurfacePlotData] = useState(null)
 
   useEffect(() => {
     // nothing is fetched if the form is not submitted, fix later to be empty plots waiting for data
@@ -30,6 +31,7 @@ export default function GreeksPlot({ submittedForm }) {
         setThetaPlotData(JSON.parse(result.theta_plot)); 
         setVegaPlotData(JSON.parse(result.vega_plot)); 
         setRhoPlotData(JSON.parse(result.rho_plot)); 
+        setThetaSurfacePlotData(JSON.parse(result.theta_surface));
 
       } catch (err) {
         console.err('Error fetching Greeks plots:', err);
@@ -41,7 +43,7 @@ export default function GreeksPlot({ submittedForm }) {
   return (
     <div> 
       {!submittedForm ? 
-        <div className='greeks-plots'>
+      <div className='greeks-plots'>
         <div className='plot'> <Plot data={[]} layout={{title: 'Empty Chart', xaxis: { title: 'X Axis' }, yaxis: { title: 'Y Axis' }}} useResizeHandler={true} style={{ width: '100%', height: '100%' }}/> </div>
         <div className='plot'> <Plot data={[]} layout={{title: 'Empty Chart', xaxis: { title: 'X Axis' }, yaxis: { title: 'Y Axis' }}} useResizeHandler={true} style={{ width: '100%', height: '100%' }}/> </div>
         <div className='plot'> <Plot data={[]} layout={{title: 'Empty Chart', xaxis: { title: 'X Axis' }, yaxis: { title: 'Y Axis' }}} useResizeHandler={true} style={{ width: '100%', height: '100%' }}/> </div>
@@ -58,7 +60,7 @@ export default function GreeksPlot({ submittedForm }) {
         <div className='plot'> <Plot data={thetaPlotData.data} layout={thetaPlotData.layout} useResizeHandler={true} style={{ width: '100%', height: '100%' }}/> </div>
         <div className='plot'> <Plot data={vegaPlotData.data} layout={vegaPlotData.layout} useResizeHandler={true} style={{ width: '100%', height: '100%' }}/> </div>
         <div className='plot'> <Plot data={rhoPlotData.data} layout={rhoPlotData.layout} useResizeHandler={true} style={{ width: '100%', height: '100%' }}/> </div>
-        <div className='plot'> <Plot data={rhoPlotData.data} layout={rhoPlotData.layout} useResizeHandler={true} style={{ width: '100%', height: '100%' }}/> </div>
+        <div className='plot'> <Plot data={thetaSurfacePlotData.data} layout={thetaSurfacePlotData.layout} useResizeHandler={true} style={{ width: '100%', height: '100%' }}/> </div>
       </div>
       }
     </div>

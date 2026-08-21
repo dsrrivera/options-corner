@@ -1,6 +1,6 @@
 from models.black_scholes import BlackScholes
 from solvers.newton_raphson import NewtonRaphson
-from services.greeks_plots import generateDeltaPlot, generateGammaPlot, generateThetaPlot, generateVegaPlot, generateRhoPlot
+from services.greeks_plots import generateDeltaPlot, generateGammaPlot, generateThetaPlot, generateVegaPlot, generateRhoPlot, generateThetaSurface
 
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -38,5 +38,11 @@ def get_greeks_plots(input: BlackScholesInput):
     theta_plot = generateThetaPlot(b2)
     vega_plot = generateVegaPlot(b2)
     rho_plot = generateRhoPlot(b2)
+    theta_surface_plot = generateThetaSurface(b2)
 
-    return {"delta_plot": delta_plot, "gamma_plot": gamma_plot, "theta_plot": theta_plot, "vega_plot": vega_plot, "rho_plot": rho_plot}
+    return {"delta_plot": delta_plot, 
+            "gamma_plot": gamma_plot, 
+            "theta_plot": theta_plot, 
+            "vega_plot": vega_plot, 
+            "rho_plot": rho_plot,
+            "theta_surface": theta_surface_plot}

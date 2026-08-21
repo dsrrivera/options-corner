@@ -280,3 +280,69 @@ def generateRhoPlot(black_scholes: BlackScholes):
 
     # fig.show()
     return pio.to_json(fig)
+
+def generateThetaSurface(black_scholes: BlackScholes):
+    stock_price = black_scholes.stock_price
+
+    underlying_prices = np.linspace(stock_price*0.8, stock_price*1.2, 100)
+
+    if black_scholes.time_til_expiration > 90:
+        max_expiration = black_scholes.time_til_expiration
+    else:
+        max_expiration = 90
+
+    times_til_expiration = np.linspace(0.1, max_expiration, 100)
+
+    # creates the 2D coordinate grids
+    X, Y = np.meshgrid(underlying_prices, times_til_expiration)
+
+    print(X)
+
+    Z = np.zeros_like(X)  # same shape as X and Y
+
+    # we compute Z from X and Y by iterating over their values in the meshgrid to fill in Z
+    rows, cols = X.shape
+    for i in range(rows):
+        for j in range(cols):
+            cur_underlying_price = X[i, j]
+            cur_time_til_expiry = Y[i, j]
+
+            d1=black_scholes.computeD1(stock_price=cur_underlying_price, time_til_expiration=cur_time_til_expiry)
+            d2=black_scholes.computeD2(d1=d1, time_til_expiration=cur_time_til_expiry)
+            cur_theta = black_scholes.computeTheta(time_til_expiration=cur_time_til_expiry, stock_price = cur_underlying_price, d1=d1, d2=d2)
+            Z[i, j] = cur_theta
+
+    fig = go.Figure(
+        go.Surface(
+            x=X,
+            y=Y,
+            z=Z,
+            colorscale="ice"
+        )
+    )
+
+    camera = dict(eye=dict(x=1.0, y=-2.0, z=1)) # positions the camera low and directly along the X-axis
+
+    fig.update_layout(
+        title={
+            'text': 'Theta Surface',
+
+            # center and lower the main plot title
+            'x': 0.5,  # exactly half of the containers width
+            'xanchor': 'center',
+            'y': 0.90, # nudged down slightly
+            'yanchor': 'top'
+        },
+        scene_camera=camera,
+        scene={
+            'xaxis_title': "Stock Price",
+            'yaxis_title': "TTE",
+            'zaxis_title': "Theta",
+            'domain': {'x':[0, 1], 'y':[0, 1]}  # makes the plot fill the entire domain, different than container
+        },
+
+        margin=dict(l=20, r=40, t=80, b=20)     # adjusts plotly's automatic margin for the plot
+    )
+
+    # fig.show()
+    return pio.to_json(fig)
