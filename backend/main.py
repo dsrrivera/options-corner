@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 import os
 from models.black_scholes import BlackScholes
 from solvers.newton_raphson import NewtonRaphson
@@ -17,9 +20,11 @@ class BlackScholesInput(BaseModel):
 
 app = FastAPI()
 
+origins = os.environ.get("ALLOWED_ORIGINS", "").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=origins,
     allow_headers=["*"],
     allow_methods=["*"]
 )
