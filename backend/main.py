@@ -1,3 +1,4 @@
+import os
 from models.black_scholes import BlackScholes
 from solvers.newton_raphson import NewtonRaphson
 from services.greeks_plots import generateDeltaPlot, generateGammaPlot, generateThetaPlot, generateVegaPlot, generateRhoPlot, generateThetaSurface

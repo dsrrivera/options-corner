@@ -296,8 +296,6 @@ def generateThetaSurface(black_scholes: BlackScholes):
     # creates the 2D coordinate grids
     X, Y = np.meshgrid(underlying_prices, times_til_expiration)
 
-    print(X)
-
     Z = np.zeros_like(X)  # same shape as X and Y
 
     # we compute Z from X and Y by iterating over their values in the meshgrid to fill in Z
